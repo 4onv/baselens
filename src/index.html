@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="See how a document's first base element changes its HTML link destinations. A local, offline URL explorer.">
+  <title>BaseLens — see where your links go</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <a class="skip-link" href="#analyze-form">Skip to the explorer</a>
+  <div class="shell">
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="BaseLens home"><span class="brand-mark" aria-hidden="true">b<span>↗</span></span><span>BaseLens<span class="version">v0.1</span></span></a>
+      <div class="local-badge"><span class="status-dot" aria-hidden="true"></span>Runs in your browser</div>
+    </header>
+    <main id="top">
+      <section class="hero" aria-labelledby="page-heading">
+        <div><p class="eyebrow">HTML in. Destinations explained.</p><h1 id="page-heading">Where do your links<br class="wide-break"> <em>really</em> go?</h1><p class="hero-copy">One <code>&lt;base&gt;</code> element can redirect a whole page of relative links. Paste your HTML and see the destination behind every <code>href</code>.</p></div>
+        <aside class="hero-note"><span class="note-number">01</span><p>The first <code>base[href]</code> wins.</p><span>Compare its effect with resolving from the page URL. Everything stays in this tab.</span></aside>
+      </section>
+      <div class="workspace">
+        <section class="panel input-panel" aria-labelledby="input-heading">
+          <div class="panel-heading"><h2 id="input-heading"><span class="step">1</span>Your document</h2><span id="source-badge" class="badge sample-badge">Synthetic example</span></div>
+          <div class="sample-picker"><label for="sample-select">Start with an example</label><select id="sample-select"><option value="base-path">A different base path</option><option value="external-base">An external base origin</option><option value="invalid-first">An invalid first base</option></select></div>
+          <form id="analyze-form" novalidate>
+            <label for="page-url">Page URL</label>
+            <input id="page-url" name="page-url" type="url" spellcheck="false" autocomplete="off" maxlength="8192" aria-describedby="page-hint" required>
+            <p class="field-hint" id="page-hint">The full HTTP or HTTPS address where this document lives.</p>
+            <div class="label-row"><label for="html-input">HTML source</label><label class="file-button" for="file-input">Import file<input id="file-input" type="file" accept=".html,.htm,.txt,text/html,text/plain"></label></div>
+            <textarea id="html-input" name="html-input" rows="11" spellcheck="false" autocomplete="off" aria-describedby="html-hint" placeholder="Paste HTML with links and an optional base element"></textarea>
+            <p class="field-hint" id="html-hint">Up to 512 KiB UTF-8 · 500 links · 20 base elements</p>
+            <button class="primary-button" id="analyze-button" type="submit">Analyze destinations <span aria-hidden="true">↗</span></button>
+          </form>
+          <p id="error-message" class="error-message" role="alert" hidden></p>
+          <p id="status-message" class="status-message" role="status" aria-live="polite"></p>
+          <div class="input-footnote"><span aria-hidden="true">⌁</span><p>Input is parsed locally. Your HTML is never rendered as a page, and links are shown as text.</p></div>
+        </section>
+        <section class="output-area" aria-label="Analysis output">
+          <div id="empty-state" class="panel empty-state" hidden><span aria-hidden="true">↗</span><h2>Ready for a closer look</h2><p>Analyze your document to compare its link destinations.</p></div>
+          <div id="results-section" hidden>
+            <div class="results-heading"><h2><span class="step">2</span>Follow the resolution</h2><span id="result-context" class="muted-label">Synthetic example</span></div>
+            <div class="stats" aria-label="Analysis summary">
+              <div class="stat"><strong id="stat-total">0</strong><span>links inspected</span></div>
+              <div class="stat"><strong id="stat-changed">0</strong><span>changed by base</span></div>
+              <div class="stat"><strong id="stat-origin">0</strong><span>cross-origin HTTP(S)</span></div>
+              <div class="stat"><strong id="stat-non-http">0</strong><span>non-HTTP URLs</span></div>
+            </div>
+            <section class="base-panel" aria-labelledby="base-heading">
+              <div class="base-heading"><h3 id="base-heading">Resolution context</h3><span id="base-status" class="badge">First base applied</span></div>
+              <dl class="context-list"><div><dt>Page URL</dt><dd id="context-page"></dd></div><div><dt>First base href</dt><dd id="context-raw"></dd></div><div class="effective-context"><dt>Effective base</dt><dd id="context-effective"></dd></div></dl>
+              <p id="base-explanation" class="base-explanation"></p>
+            </section>
+            <section class="panel links-panel" aria-labelledby="links-heading">
+              <div class="panel-heading"><h3 id="links-heading">Link destinations</h3><span id="visible-count" class="muted-label"></span></div>
+              <div class="filter-bar"><div><label class="sr-only" for="search-input">Search links and URLs</label><input id="search-input" type="search" placeholder="Search links and URLs…" autocomplete="off"></div><div><label class="sr-only" for="filter-select">Filter links</label><select id="filter-select"><option value="all">All links</option><option value="changed">Changed by base</option><option value="cross-origin">Cross-origin HTTP(S)</option><option value="non-http">Non-HTTP URLs</option><option value="invalid">Unresolvable URLs</option></select></div></div>
+              <div class="table-container"><table><caption class="sr-only">HTML links, resolved destinations and destinations calculated from the page URL alone</caption><thead><tr><th scope="col">Link in the HTML</th><th scope="col">Resolved destination</th><th scope="col">From page URL alone</th></tr></thead><tbody id="result-body"></tbody></table><p id="no-results" class="no-results" hidden>No links match these filters.</p></div>
+              <div class="export-bar"><p>JSON includes entered URLs and link text.<br>Review it before sharing.</p><div class="export-actions"><button id="copy-button" class="secondary-button" type="button" disabled>Copy JSON</button><button id="download-button" class="secondary-button" type="button" disabled>Download JSON <span aria-hidden="true">↓</span></button></div></div>
+            </section>
+          </div>
+        </section>
+      </div>
+      <section class="reading-note" aria-label="How to interpret the results"><h2>A clear view of the static HTML</h2><p>BaseLens inspects HTML <code>a[href]</code> and <code>area[href]</code> outside nested templates. It assumes scripting is enabled and ignores links and bases inside <code>noscript</code>. A <code>&lt;frameset</code> marker is conservatively rejected, even inside a comment or quoted example. Link labels are limited to 1,000 characters.</p><p>“Changed” compares with resolution from the page URL alone. “Cross-origin” compares HTTP(S) destinations with the page origin. Invalid first-base handling can vary by browser. Runtime changes, Content Security Policy, redirects and link availability need separate checks. A cross-origin destination can be intentional.</p></section>
+    </main>
+    <footer class="site-footer"><span class="footer-brand">BaseLens</span><span>Small detail. Clear destination.</span><span>Offline HTML link explorer · MIT</span></footer>
+  </div>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

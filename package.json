@@ -1,0 +1,19 @@
+{
+  "name": "@4onv/baselens",
+  "version": "0.1.0",
+  "description": "See how HTML base href changes link destinations in an offline visual playground.",
+  "type": "module",
+  "license": "MIT",
+  "engines": { "node": ">=22" },
+  "exports": { ".": "./src/core.js", "./extract": "./src/extract.js" },
+  "files": ["src/core.js", "src/extract.js", "dist/baselens.html", "docs", "README.md", "LICENSE"],
+  "scripts": {
+    "build": "node scripts/build.js",
+    "test": "node --test test/core.test.js",
+    "check:package": "node scripts/check-package.js",
+    "test:browser": "playwright test",
+    "prepack": "node scripts/build.js"
+  },
+  "repository": { "type": "git", "url": "https://github.com/4onv/baselens.git" },
+  "devDependencies": { "@playwright/test": "1.65.0" }
+}

@@ -1,0 +1,260 @@
+{
+  "researchDate": "2026-11-05",
+  "timeZone": "America/Chicago",
+  "windowUTC": {
+    "startInclusive": "2026-11-05T06:00:00Z",
+    "endExclusive": "2026-11-06T06:00:00Z"
+  },
+  "researchedOnUTC": "2026-11-06",
+  "recommendation": "BaseLens was selected as an offline HTML link-resolution comparison. Its chosen emphasis is side-by-side page-only and effective-base destinations, with explicit base provenance.",
+  "trendEvidence": [
+    {
+      "kind": "Previously saved direct rolling Trending observation made during the research day",
+      "at": "2026-11-05T14:00:19.636917Z",
+      "url": "https://github.com/trending?since=daily",
+      "savedFile": "trending-2026-11-05.json",
+      "ranks": {
+        "NVIDIA/auto-ontology": 1,
+        "mattpocock/skills": 2,
+        "garrytan/gstack": 3,
+        "D4Vinci/Scrapling": 5,
+        "max-sixty/worktrunk": 7
+      },
+      "limitation": "Ranks describe one captured rolling list. They establish neither full-calendar-day rank nor historical daily star gains."
+    }
+  ],
+  "candidates": [
+    {
+      "rank": 1,
+      "name": "HTML link-resolution playground",
+      "decision": "Recommend with explicit comparison features",
+      "demand": "A scraper user reported several real sites resolving links incorrectly because the first HTML base href was ignored. Scrapling appeared fifth in the research-day rolling observation.",
+      "evidence": [
+        {
+          "url": "https://github.com/D4Vinci/Scrapling/issues/563",
+          "createdAt": "2026-11-05T15:10:10Z",
+          "summary": "Report says relative URLs resolve against the response URL while ignoring base href, affecting urljoin, follow, LinkExtractor and CrawlSpider. Examples include forum.vbulletin.com, php.net/strlen and crawler-test.com. These examples are upstream reporter observations, not independently replayed network tests."
+        }
+      ],
+      "distinctValue": "An inspectable before/after table showing resolution against the page URL alone and against the first effective base href, with changed targets and origin classification. Expose which base was selected and why later or invalid bases did not apply. A downloadable local artifact can be attached to a debugging issue. Changing the page URL can demonstrate deployment relocation behavior.",
+      "demo": "Open one self-contained HTML file, load clearly labeled synthetic markup, see a forum/articles link move to /articles and a fragment attach to the base document. Paste or import saved HTML. No account or service configuration is required.",
+      "discoverability": "Specific search intent around base href ignored, relative URL resolution and scraper links points to an identifiable developer audience. A visible side-by-side demonstration makes the explanation easy to inspect and share. This is an inference about audience fit, not a forecast of stars.",
+      "limitations": "Extraction and base-aware resolution already exist in mature tools. The defensible value is explaining the difference and supplying a small portable debugging artifact. A static HTML snapshot cannot show DOM changes, redirects, request outcomes or all browsing-context/CSP effects."
+    },
+    {
+      "rank": 2,
+      "name": "Question priority board for agent planning",
+      "decision": "Defer because direct alternatives already cover most of the proposed product",
+      "demand": "A user reports that questions in large planning sessions receive equal visual weight even when some decisions are irreversible. Their reported history contains 19 sessions, a median of 15 questions and a maximum of 26.",
+      "evidence": [
+        {
+          "url": "https://github.com/mattpocock/skills/issues/1386",
+          "createdAt": "2026-11-05T09:22:17Z",
+          "summary": "Requests one-way/two-way decision labels, blast radius and visible emphasis for high-impact questions."
+        },
+        {
+          "url": "https://github.com/mattpocock/skills/issues/1388",
+          "createdAt": "2026-11-05T10:54:05Z",
+          "summary": "Related request to preserve new work discovered mid-session rather than requiring a separate instruction to chart it."
+        }
+      ],
+      "distinctValue": "Could accept question JSON and rank cards by explicit reversibility and impact, collect answers and export a continuation block. However TBD Board already has offline one-file cards, priorities, batch answers and decision logs, and grill-board already supplies a live planning board.",
+      "demo": "An offline HTML page with synthetic questions is easy to try in seconds.",
+      "discoverability": "Agent-planning audiences are visible in the second-ranked repository, but discovering a new project among established question boards would require a stronger differentiator."
+    },
+    {
+      "rank": 3,
+      "name": "Portable allowlisted command environment runner",
+      "decision": "Defer because the core operation already exists and compatibility scope is larger than the daily release",
+      "demand": "A Nushell user requests a reusable function that retains only named or regex-selected environment variables, and separately requests declarations of environment variables that affect wrapped programs.",
+      "evidence": [
+        {
+          "url": "https://github.com/nushell/nushell/issues/19457",
+          "createdAt": "2026-11-05T16:41:03Z",
+          "summary": "Environment Sanitiser function request. The author currently rewrites this function for scripts."
+        },
+        {
+          "url": "https://github.com/nushell/nushell/issues/19456",
+          "createdAt": "2026-11-05T16:36:53Z",
+          "summary": "Wrapped-command environment declaration request motivated by surprising program behavior and build reproducibility."
+        }
+      ],
+      "trendRelation": "Nushell appears in today's rolling snapshot according to the parent run. It is not in the retained November 5 observation, so the historical trend connection is weaker than the first two ideas.",
+      "distinctValue": "A cross-platform runner could preview retained variable names and launch commands with a tested allowlist. GNU env already supports starting with an empty environment. Preserving necessary Windows/process variables and resolving executable paths correctly adds compatibility work.",
+      "demo": "A synthetic parent environment and a child that prints only variable names can demonstrate filtering offline.",
+      "discoverability": "Shell and reproducible-build search terms reach an identifiable audience, but existing env and shell mechanisms are established and familiar."
+    }
+  ],
+  "competitors": [
+    {
+      "name": "DevToolbelt Extract Links from HTML",
+      "url": "https://devtoolbelt.tech/tools/extract-links-from-html",
+      "verified": "Opened primary product documentation November 6",
+      "scope": "Pasted HTML and page URL, relative/base-aware resolution, raw href, anchor text, rel, target, types, filters, unique URLs, CSV and URL copying. This is substantial overlap with a generic extraction tool. The proposed project should center the difference caused by base resolution, provenance and portability."
+    },
+    {
+      "name": "HTML::SimpleLinkExtor",
+      "url": "https://github.com/nigelhorne/HTML-SimpleLinkExtor",
+      "verified": "Opened repository README November 6",
+      "scope": "Perl library extracts links by tag/attribute and resolves relative URLs against an HTML BASE HREF or caller-supplied base. A supplied constructor base overrides HTML base. It offers a programmer interface rather than the proposed comparison UI."
+    },
+    {
+      "name": "TBD Board",
+      "url": "https://github.com/Camerash/tbd-board",
+      "verified": "Read README through GitHub connector November 6",
+      "scope": "Single offline HTML board, priority cards, choices/free answers, batch copy, decision log, browser drafts and explicit agent decisions. Direct overlap rules out a generic question board."
+    },
+    {
+      "name": "grill-board",
+      "url": "https://github.com/MusabIlhan/grill-board",
+      "verified": "Primary repository search result November 6",
+      "scope": "Live web planning board with arbitrary answer order and follow-up questions. Relevant competitor for a planning UI."
+    },
+    {
+      "name": "GNU env",
+      "url": "https://www.gnu.org/software/coreutils/manual/html_node/env-invocation.html",
+      "verified": "Primary GNU manual search result verified November 6 after initial direct fetch timeout",
+      "scope": "GNU env -i or --ignore-environment starts with an empty inherited environment. Explicit NAME=VALUE operands supply selected variables. This establishes significant overlap with a standalone allowlist runner."
+    }
+  ],
+  "implementationReferences": [
+    {
+      "url": "https://html.spec.whatwg.org/multipage/semantics.html#the-base-element",
+      "verified": "Read current WHATWG specification November 6",
+      "summary": "The first base element with an href in document tree order supplies the frozen base URL. Parse its href relative to the document fallback URL. Parse failure, data or javascript schemes, or document CSP blocking use the fallback. Do not choose the second base merely because the first is invalid."
+    },
+    {
+      "url": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/base",
+      "verified": "Read current MDN element reference November 6",
+      "summary": "Absolute and relative base URLs, first href and target behavior, and fragment links resolving against the base document."
+    }
+  ],
+  "excludedDateMistakes": [
+    {
+      "url": "https://github.com/mattpocock/skills/issues/1392",
+      "createdAt": "2026-11-06T14:46:59Z",
+      "reason": "Quiz feedback request is today's event, outside the requested previous local day. Existing offline quiz builders also have extensive overlap."
+    },
+    {
+      "url": "https://github.com/max-sixty/worktrunk/issues/4702",
+      "createdAt": "2026-11-05T04:38:25Z",
+      "reason": "Plugin/binary version skew request falls on November 4 in Chicago despite a November 5 UTC date."
+    },
+    {
+      "url": "https://github.com/D4Vinci/Scrapling/issues/558",
+      "createdAt": "2026-11-05T02:25:07Z",
+      "reason": "The GitHub API verified this credential propagation report falls on November 4 Chicago. Treat as earlier context if used."
+    }
+  ],
+  "selectionCaveat": "Demand is based on specific public reports and observed repository interest. The competitor review is selective. No historical daily gains or guaranteed star outcomes are asserted.",
+  "currentObservation": {
+    "observedAtUtc": "2026-11-06T15:12:09.4836769Z",
+    "sourceUrl": "https://github.com/trending?since=daily",
+    "interpretation": "Rolling snapshot observed November 6, not historical November 5 ranks or gains",
+    "repositories": [
+      "NVIDIA/auto-ontology",
+      "rails/rails",
+      "mpv-player/mpv",
+      "rust-lang/rust",
+      "react/react",
+      "angular/angular",
+      "symfony/symfony",
+      "prometheus/prometheus",
+      "google/skills",
+      "microsoft/vscode",
+      "lz4/lz4",
+      "nushell/nushell",
+      "etcd-io/etcd",
+      "openssl/openssl",
+      "mattpocock/skills",
+      "cloudflare/security-audit-skill",
+      "astral-sh/ruff"
+    ]
+  },
+  "portfolioObservation": {
+    "observedAtUtc": "2026-11-06T15:12:25Z",
+    "measurement": "Cumulative GitHub counts at observation time. Net changes compare each repository with its first recorded campaign observation. The baselines differ and the measurement intervals are not the November 5 local calendar day.",
+    "repositories": [
+      {
+        "repository": "4onv/skilldelta",
+        "stars": 0,
+        "forks": 0,
+        "sourceURL": "https://api.github.com/repos/4onv/skilldelta",
+        "baselineAtUtc": "2026-11-04T04:43:17.857881Z",
+        "baselineStars": 0,
+        "baselineForks": 0,
+        "starDeltaSinceBaseline": 0,
+        "forkDeltaSinceBaseline": 0,
+        "allIssueAndPullRequestCount": 0,
+        "issuesSourceURL": "https://api.github.com/repos/4onv/skilldelta/issues?state=all&per_page=100"
+      },
+      {
+        "repository": "4onv/trace-tally",
+        "stars": 0,
+        "forks": 0,
+        "sourceURL": "https://api.github.com/repos/4onv/trace-tally",
+        "baselineAtUtc": "2026-11-04T04:43:17.857881Z",
+        "baselineStars": 0,
+        "baselineForks": 0,
+        "starDeltaSinceBaseline": 0,
+        "forkDeltaSinceBaseline": 0,
+        "allIssueAndPullRequestCount": 0,
+        "issuesSourceURL": "https://api.github.com/repos/4onv/trace-tally/issues?state=all&per_page=100"
+      },
+      {
+        "repository": "4onv/cueaudit",
+        "stars": 0,
+        "forks": 0,
+        "sourceURL": "https://api.github.com/repos/4onv/cueaudit",
+        "baselineAtUtc": "2026-11-04T04:43:17.857881Z",
+        "baselineStars": 0,
+        "baselineForks": 0,
+        "starDeltaSinceBaseline": 0,
+        "forkDeltaSinceBaseline": 0,
+        "allIssueAndPullRequestCount": 0,
+        "issuesSourceURL": "https://api.github.com/repos/4onv/cueaudit/issues?state=all&per_page=100"
+      },
+      {
+        "repository": "4onv/axscope",
+        "stars": 0,
+        "forks": 0,
+        "sourceURL": "https://api.github.com/repos/4onv/axscope",
+        "baselineAtUtc": "2026-11-04T04:43:17.857881Z",
+        "baselineStars": 0,
+        "baselineForks": 0,
+        "starDeltaSinceBaseline": 0,
+        "forkDeltaSinceBaseline": 0,
+        "allIssueAndPullRequestCount": 0,
+        "issuesSourceURL": "https://api.github.com/repos/4onv/axscope/issues?state=all&per_page=100"
+      },
+      {
+        "repository": "4onv/stashscope",
+        "stars": 0,
+        "forks": 0,
+        "sourceURL": "https://api.github.com/repos/4onv/stashscope",
+        "baselineAtUtc": "2026-11-04T17:40:33.7078459Z",
+        "baselineStars": 0,
+        "baselineForks": 0,
+        "starDeltaSinceBaseline": 0,
+        "forkDeltaSinceBaseline": 0,
+        "allIssueAndPullRequestCount": 0,
+        "issuesSourceURL": "https://api.github.com/repos/4onv/stashscope/issues?state=all&per_page=100"
+      },
+      {
+        "repository": "4onv/sql-slotcheck",
+        "stars": 0,
+        "forks": 0,
+        "sourceURL": "https://api.github.com/repos/4onv/sql-slotcheck",
+        "baselineAtUtc": "2026-11-05T14:09:32.0893889Z",
+        "baselineStars": 0,
+        "baselineForks": 0,
+        "starDeltaSinceBaseline": 0,
+        "forkDeltaSinceBaseline": 0,
+        "allIssueAndPullRequestCount": 0,
+        "issuesSourceURL": "https://api.github.com/repos/4onv/sql-slotcheck/issues?state=all&per_page=100"
+      }
+    ],
+    "interpretation": "All six repositories have zero stars and forks, with zero measured net change since their respective observed baselines. Public issue and pull request collections are empty. These metrics provide no traction leader or concrete external feedback. Release downloads are between zero and one per asset and can include our validation downloads. They do not establish unique installs or independent use.",
+    "selectionImplication": "Choose the next project on concrete demand and a quickly understandable demonstration. Existing portfolio measurements have not established that narrower auditing CLIs attract more attention. A zero-setup interactive demo could test a different trial path, if the candidate also has credible practical demand."
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "observedAtUtc": "2026-11-06T15:12:09.4836769Z",
+  "sourceUrl": "https://github.com/trending?since=daily",
+  "interpretation": "Rolling snapshot observed November 6, not historical November 5 ranks or gains",
+  "repositories": [
+    "NVIDIA/auto-ontology",
+    "rails/rails",
+    "mpv-player/mpv",
+    "rust-lang/rust",
+    "react/react",
+    "angular/angular",
+    "symfony/symfony",
+    "prometheus/prometheus",
+    "google/skills",
+    "microsoft/vscode",
+    "lz4/lz4",
+    "nushell/nushell",
+    "etcd-io/etcd",
+    "openssl/openssl",
+    "mattpocock/skills",
+    "cloudflare/security-audit-skill",
+    "astral-sh/ruff"
+  ]
+}
