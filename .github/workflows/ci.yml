@@ -23,9 +23,9 @@ jobs:
       - run: npm run build
       - run: npm test
       - run: npm pack --ignore-scripts
-      - run: npm run check:package -- 4onv-baselens-0.1.0.tgz
+      - run: npm run check:package -- 4onv-baselens-0.1.1.tgz
   browsers:
-    name: Chromium and Firefox artifact tests
+    name: Chromium, Firefox and WebKit artifact tests
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -37,5 +37,5 @@ jobs:
           node-version: 24
       - run: npm ci --ignore-scripts
       - run: npm run build
-      - run: npx playwright install --with-deps chromium firefox
+      - run: npx playwright install --with-deps chromium firefox webkit
       - run: npm run test:browser

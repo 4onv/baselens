@@ -92,6 +92,10 @@ export function analyzeLinks(input) {
       base.changesOrigin = candidate.origin !== page.origin;
     }
   }
+  const warnings = [];
+  if (base.status === 'invalid' || base.status === 'disallowed') {
+    warnings.push(`${base.status === 'invalid' ? 'Invalid' : 'Disallowed'} first base: the model uses the page URL fallback. Browser behavior can differ; verify this case in the target browser.`);
+  }
 
   const rows = links.map((link, index) => {
     const target = resolve(link.href, effective);
@@ -114,7 +118,7 @@ export function analyzeLinks(input) {
   return {
     version: 1,
     model: 'static-first-base-url',
-    warnings: base.status === 'invalid' ? ['Invalid first base: the model uses the page URL fallback. Browser behavior can differ; verify this case in the target browser.'] : [],
+    warnings,
     pageUrl: page.href,
     effectiveBase: effective.href,
     base,

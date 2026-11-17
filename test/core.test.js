@@ -62,6 +62,8 @@ test('javascript and data bases fall back and later valid bases stay ignored', (
   for (const href of ['JaVaScRiPt:alert(1)', 'data:text/html,hello', '\tjavascript:evil\n']) {
     const result = analyze(['next'], [href, '/must-not-win/']);
     assert.equal(result.base.status, 'disallowed');
+    assert.equal(result.warnings.length, 1);
+    assert.match(result.warnings[0], /Disallowed first base.*Browser behavior can differ/);
     assert.equal(result.effectiveBase, pageUrl);
     assert.equal(result.links[0].resolved, 'https://example.test/forum/next');
   }

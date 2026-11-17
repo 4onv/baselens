@@ -3,7 +3,7 @@ import { mkdtemp, writeFile, readFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join, resolve, dirname, basename } from 'node:path';
 
-const archive = resolve(process.argv[2] || '4onv-baselens-0.1.0.tgz');
+const archive = resolve(process.argv[2] || '4onv-baselens-0.1.1.tgz');
 const scratch = await mkdtemp(join(tmpdir(), 'baselens-package-'));
 const npmCli = process.env.npm_execpath || process.env.BASELENS_NPM_CLI;
 if (!npmCli) throw new Error('Run through npm run check:package -- ARCHIVE');

@@ -8,5 +8,9 @@ export default defineConfig({
   retries: 0,
   reporter: 'list',
   use: { headless: true, viewport: { width: 1440, height: 1000 } },
-  projects: [{ name: 'chromium', use: { browserName: 'chromium' } }, { name: 'firefox', use: { browserName: 'firefox' } }],
+  projects: [
+    { name: 'chromium', use: { browserName: 'chromium' } },
+    { name: 'firefox', use: { browserName: 'firefox' } },
+    { name: 'webkit', use: { browserName: 'webkit' } },
+  ],
 });

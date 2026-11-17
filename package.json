@@ -1,6 +1,6 @@
 {
   "name": "@4onv/baselens",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "See how HTML base href changes link destinations in an offline visual playground.",
   "type": "module",
   "license": "MIT",

@@ -87,7 +87,9 @@ function analyze() {
         : 'This model falls back to the page URL. A later base does not take its place.';
     if (report.base.ignoredCount) explanation += ` ${report.base.ignoredCount} later base element${report.base.ignoredCount === 1 ? ' is' : 's are'} ignored.`;
     if (report.base.changesOrigin) explanation += ' The effective base has a different origin from the page.';
-    if (report.base.status === 'invalid') explanation += ' Browser handling of malformed bases can differ. Treat these modeled destinations as a comparison aid and verify them in your target browser.';
+    if (report.base.status === 'invalid' || report.base.status === 'disallowed') {
+      explanation += ' Browser handling of this base can differ. Verify these modeled destinations in your target browser.';
+    }
     byId('base-explanation').textContent = explanation;
     downloadButton.disabled = false;
     copyButton.disabled = false;

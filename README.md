@@ -2,7 +2,7 @@
 
 **See exactly how `<base href>` changes your links.** Paste saved HTML and its page URL to compare each destination with and without the document's base element.
 
-[Download the offline demo](https://github.com/4onv/baselens/releases/download/v0.1.0/baselens.html) · [Release and checksums](https://github.com/4onv/baselens/releases/tag/v0.1.0) · [Why this exists](docs/research-2026-11-05.md)
+[Download the offline demo](https://github.com/4onv/baselens/releases/download/v0.1.1/baselens.html) · [Release and checksums](https://github.com/4onv/baselens/releases/tag/v0.1.1) · [Why this exists](docs/research-2026-11-05.md)
 
 Save `baselens.html` and open it in a modern browser. It starts with a visibly labeled synthetic example. The complete app fits in that one file and runs locally.
 
@@ -33,7 +33,7 @@ BaseLens extracts HTML `a[href]` and `area[href]` elements from an inert templat
 
 The model follows first-base selection from the HTML specification. An empty href still counts. A malformed URL or a `data:`/`javascript:` base falls back to the supplied page URL, and later bases remain ignored. Other schemes use the host's WHATWG `URL` implementation. A relative link under an opaque base can consequently be invalid. [HTML standard](https://html.spec.whatwg.org/multipage/semantics.html#the-base-element)
 
-Malformed first bases receive an explicit warning in the UI and exported report. Browser handling can diverge from the modeled fallback. During development, a Chromium comparison returned `about:blank` as the document base for an invalid host. Verify malformed-base cases in your target browser.
+Malformed and disallowed first bases receive an explicit warning in the UI and exported report. Browser handling can diverge from the modeled fallback. In Playwright WebKit 27.2, a `javascript:` or `data:` base left the relative link's `href` unresolved. Chromium and Firefox used the page URL fallback for the same synthetic document. Invalid hosts also differed by engine. Inspect these cases in your target browser. [Reproducible differential checks](test/browser/app.spec.js)
 
 “Changed” compares the resolved URL with resolving the same href against the page URL alone. “Cross-origin” compares an HTTP(S) destination's scheme, hostname and effective port with the page's origin. An ordinary absolute external link can be cross-origin while remaining unchanged by the base.
 
@@ -43,14 +43,14 @@ The page URL must be absolute HTTP(S) and omit credentials. Bounds are 512 KiB o
 
 This is static fragment analysis assuming scripting is enabled. Links and bases inside HTML `noscript` are excluded. A `<frameset` marker is conservatively rejected, including when it appears in a comment or quoted example. Runtime DOM edits, redirects, response headers, CSP `base-uri`, nested browsing-context fallback rules, XML `xml:base` and `target` navigation behavior require separate inspection. The supplied page URL should be the final response address. Malformed full-document HTML can parse differently in a template, especially table and document-structure recovery. Reachability, HTTP status and scraping-library behavior require separate network tests.
 
-Chromium and Firefox exercise the downloadable artifact, including differential checks against actual browser DOM resolution for documented fixtures. Safari coverage is pending. Parsing and URL results follow the browser that opens the file.
+Chromium, Firefox, and WebKit exercise the downloadable artifact, including separate differential checks for the known disallowed-base discrepancy. Safari on Apple devices still needs direct verification. [Playwright browser coverage](https://playwright.dev/docs/browsers#webkit)
 
 ## Use the engine
 
 The zero-dependency URL engine also works in Node.js 22+ with already extracted attributes. Install the release archive directly if desired.
 
 ```sh
-npm install https://github.com/4onv/baselens/releases/download/v0.1.0/4onv-baselens-0.1.0.tgz
+npm install https://github.com/4onv/baselens/releases/download/v0.1.1/4onv-baselens-0.1.1.tgz
 ```
 
 ```js
@@ -72,11 +72,11 @@ console.log(report.links[0].resolved); // https://example.test/articles
 npm ci
 npm run build
 npm test
-npx playwright install chromium firefox
+npx playwright install chromium firefox webkit
 npm run test:browser
 ```
 
-Open `dist/baselens.html` after building. Development dependencies support browser testing. Runtime operation uses browser APIs and has zero package dependencies. The build is deterministic for identical source bytes. CI builds and tests on Linux and Windows, then exercises Chromium and Firefox on Linux.
+Open `dist/baselens.html` after building. Runtime operation uses browser APIs and has zero package dependencies. The build is deterministic for identical source bytes. CI builds and tests on Linux and Windows, then runs all three browser engines on Linux.
 
 ## Alternatives and next steps
 

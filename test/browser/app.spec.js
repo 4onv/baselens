@@ -97,7 +97,6 @@ test('resolutions match live browser DOM for trusted static fixtures', async ({ 
   const fixtures = [
     '<base href="/"><a href="articles">A</a><a href="#top">B</a>',
     '<base href="../assets/"><a href="./guide?q=a&amp;b=c">A</a><a href="//cdn.test/file">B</a>',
-    '<base href="javascript:void(0)"><base href="/later/"><a href="item">A</a>',
     '<base target="_blank"><base href="https://other.test:443/docs/"><a href="?q=x">A</a>',
     '<template><base href="https://hidden.test/"></template><a href="item">A</a>',
     '<noscript><base href="/ignored/"><a href="wrong">Wrong</a></noscript><base href="/docs/"><a href="next">Next</a>',
@@ -114,4 +113,30 @@ test('resolutions match live browser DOM for trusted static fixtures', async ({ 
     expect(r.links.map(n => n.resolved)).toEqual(expected);
   }
   await native.close();
+});
+
+test('disallowed bases retain the documented model and expose cross-engine fallback differences', async ({ page, context, browserName }) => {
+  const native = await context.newPage();
+  let documentHtml = '';
+  await native.route('https://example.test/**', route => route.fulfill({ contentType: 'text/html', body: documentHtml }));
+  try {
+    for (const base of ['javascript:void(0)', 'data:text/plain,example']) {
+      documentHtml = '<!doctype html><base href="' + base + '"><base href="/later/"><a href="item">Item</a>';
+      await native.goto('https://example.test/forum/topic.html');
+      const observed = await native.locator('a').getAttribute('href');
+      const href = await native.locator('a').evaluate(node => node.href);
+      expect(observed).toBe('item');
+      expect(href).toBe(browserName === 'webkit' ? 'item' : 'https://example.test/forum/item');
+      await analyze(page, documentHtml);
+      const result = await report(page);
+      expect(result.base.status).toBe('disallowed');
+      expect(result.base.ignoredCount).toBe(1);
+      expect(result.links[0].resolved).toBe('https://example.test/forum/item');
+      expect(result.warnings).toHaveLength(1);
+      expect(result.warnings[0]).toMatch(/Disallowed first base.*Browser behavior can differ/);
+      await expect(page.locator('#base-explanation')).toContainText('target browser');
+    }
+  } finally {
+    await native.close();
+  }
 });
